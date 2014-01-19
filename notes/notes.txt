@@ -1,0 +1,117 @@
+1. Starting a New Application:
+
+	- download Yii 1.1: http://www.yiiframework.com/download/
+	- copy the extracted Yii source to webroot: c:\xampp\htdocs
+	- check system requirement: http://localhost/yii/requirements/
+	- create the application from the webroot: yii\framework\yiic webapp yii_basic
+	- app URL: http://localhost/yii_basic
+
+2. A Manual For Your Yii Site:
+
+	- Yii folder structure:
+
+		• assets, used by the Yii framework to make necessary resources available
+		• css
+		• images
+		• index.php, a “bootstrap” file through which the entire Web site will be run
+		• index-test.php, a development version of the bootstrap file
+		• protected, where all the site-specific PHP code goes
+		• themes, for theming your site, as you would with a WordPress blog
+
+	- 'protected' folder structure:
+
+		• commands, for yiic commands
+		• components, for defining necessary site components
+		• config, which stores your application’s configuration files
+		• controllers, where your application’s controller classes go
+		• data, for storing the actual database file (when using SQLite) or databaserelated files, such as SQL commands
+		• extensions, for third-party extensions (i.e., non-Yii-core libraries)
+		• messages, which stores messages translated in various languages
+		• migrations, for automating database changes
+		• models, where your application’s model classes go
+		• runtime, where Yii will create temporary files, generate logs, and so forth
+		• tests, where you’d put unit tests
+		• views, for storing all the view files used by the application
+
+	- Yii conventions:
+
+		- database name should use prefix, e.g: tbl_table, yii_table
+
+3. Initial Customizations and Code Generations
+
+	- database config: 
+		'protected/config/main.php', 'components' key, 'db'
+
+	- enable URL manager:
+		'protected/config/main.php', 'components' key, 'urlManager'
+
+	- enabling Gii:
+		'protected/config/main.php', 'modules' key, 'gii'
+		Gii URL: http://localhost/yii_basic/index.php/gii
+
+	- generating model: -> 'Model Generator'
+		Database Connection: db
+		Table Prefix: [empty] -> we're not using table prefix
+		Table Name: * -> generate model for all table
+
+		generated models:
+			'protected\models\Comment.php'
+			'protected\models\File.php'
+			'protected\models\Page.php'
+			'protected\models\PageHasFile.php'
+			'protected\models\User.php'
+
+	- generating CRUD: -> 'Crud Generator'
+		Model Class: Page -> model class name
+
+		generated codes:
+			'protected\controllers\PageController.php'
+			'protected\views\page\_form.php'
+			'protected\views\page\_search.php'
+			'protected\views\page\_view.php'
+			'protected\views\page\admin.php'
+			'protected\views\page\create.php'
+			'protected\views\page\index.php'
+			'protected\views\page\update.php'
+			'protected\views\page\view.php'
+
+4. Working With Models:
+
+	- location:
+		'protected/models'
+
+	- filename = class name:
+		class name: Comment
+		file name: Comment.php
+
+	- extends:
+		CActiveRecord -> tied to database
+		or
+		CFormModel -> tied to HTML form
+
+	- model validation:
+		
+		- method: 
+			rules()
+		
+		- validation syntax: 
+			array('attributes1,attributes2,...','validator, [validator parameters])
+
+		- custom error message:
+			array('email', 'email', 'message'=>'You must provide an email address to which you have access.)
+			array('pass', 'match', 'pattern'=>'/^[a-z0-9_-]{6,20}$/', 'message'=>'The {attribute} must be between 6 and 20 characters long and can only contain letters, numbers, the underscore, and the hyphen.')
+		
+		- creating your own validator
+			rules: array('password', 'authenticate')
+			authenticate() is defined inside the model class
+
+	 	- applying filters:
+	 		array('description', 'filter', 'filter' => 'strip_tags')
+	 		array('username, email, pass', 'filter', 'filter' => 'trim')
+
+	- relations:
+
+		method:
+			relations()
+
+
